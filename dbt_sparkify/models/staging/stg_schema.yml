@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_songs
+    description: "Flattened song metadata from raw JSON"
+    columns:
+      - name: song_id
+        tests: [not_null]
+      - name: artist_id
+        tests: [not_null]
+
+  - name: stg_events
+    description: "Song play events, filtered to page = NextSong"
+    columns:
+      - name: user_id
+        tests: [not_null]
+      - name: start_time
+        tests: [not_null]

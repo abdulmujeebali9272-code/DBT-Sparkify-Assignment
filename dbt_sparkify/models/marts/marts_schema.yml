@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: dim_users
+    description: "One row per user, latest known subscription level"
+    columns:
+      - name: user_id
+        tests: [unique, not_null]
+
+  - name: dim_songs
+    description: "One row per song"
+    columns:
+      - name: song_id
+        tests: [unique, not_null]
+
+  - name: dim_artists
+    description: "One row per artist"
+    columns:
+      - name: artist_id
+        tests: [unique, not_null]
+
+  - name: dim_time
+    description: "Timestamp broken into hour, day, week, month, year, weekday"
+    columns:
+      - name: start_time
+        tests: [unique, not_null]
+
+  - name: fct_songplays
+    description: "Fact table, one row per song play event"
+    columns:
+      - name: songplay_id
+        tests: [unique, not_null]
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+      - name: start_time
+        tests:
+          - relationships:
+              to: ref('dim_time')
+              field: start_time
